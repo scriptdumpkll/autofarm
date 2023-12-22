@@ -1,3 +1,11 @@
+--[[ 
+
+releasing this as opensource because obfuscation can mess with the performance and shit
+if you skid from this atleast credit me or something
+this is coded poorly btw
+
+]]
+
 if (_G.EXC ~= nil) then
 	warn("already executed")
 	return 
@@ -1031,16 +1039,11 @@ task.spawn(function()
 			end
 		end)
 
-		pcall(function()
-			if Player.Character.BodyEffects:FindFirstChild("K.O").Value == true and Player.Character.Humanoid.Health <= 0 then
-				Shutdown = true 
-				_G.EXC = nil
-				SG:Destroy()
-				game:GetService("RunService"):Set3dRenderingEnabled(true)
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/scriptdumpkll/shop/main/s"))()
-			end
-		end)
-		
+
+		if Player.Character.BodyEffects:FindFirstChild("K.O").Value == true and Player.Character.Humanoid.Health <= 0 then
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/scriptdumpkll/shop/main/s"))()
+		end
+
 		task.spawn(function()
 			pcall(function()
 				for i,v in pairs(_G.AutofarmSettings.Codes) do 
