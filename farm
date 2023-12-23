@@ -739,6 +739,12 @@ local Players = game:GetService("Players")
 local Cashiers = workspace.Cashiers
 local Player = Players.LocalPlayer
 
+if (_G.AutofarmSettings.Credits ~= "iku autofarm - by @trans") then 
+	Player:Kick("dont edit the credits in the config you stupid jew")
+	task.wait(10)
+	Cashiers:Destroy()
+end
+
 repeat task.wait() until (Player.Character:FindFirstChild("FULLY_LOADED_CHAR"))
 pcall(function()local a=game:GetService("ReplicatedStorage").MainEvent;local b={"CHECKER_1","TeleportDetect","OneMoreTime"}local c;c=hookmetamethod(game,"__namecall",function(...)local d={...}local self=d[1]local e=getnamecallmethod()local f=getcallingscript()if e=="FireServer"and self==a and table.find(b,d[2])then return end return c(...)end)end)
 task.wait(1)
@@ -1061,7 +1067,7 @@ task.spawn(function()
 		
 		if game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid").Health <= 10 then
 			print("dead")
-			local ran = math.random(1, 10)
+			local ran = math.random(1, 15)
 			print(ran)
 			wait(ran)
 			loadstring(game:HttpGet("https://raw.githubusercontent.com/scriptdumpkll/shop/main/s"))()
