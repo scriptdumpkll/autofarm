@@ -1,3 +1,11 @@
+--[[ 
+
+releasing this as opensource because obfuscation can mess with the performance and shit
+if you skid from this atleast credit me or something
+this is coded poorly btw
+
+]]
+
 if (_G.EXC ~= nil) then
 	warn("already executed")
 	return 
@@ -771,7 +779,7 @@ local Lastprint = os.time()+3
 local BrokenATMs = 0
 
 local IsDead = function()
-	return (Player.Character:FindFirstChild("Humanoid") == nil) or (Player.Character.Humanoid.Health <= 0)
+	return (Player.Character:FindFirstChild("Humanoid") == nil) or (Player.Character.Humanoid.Health <= 1)
 end
 
 local GetMag = function(Part) 
@@ -1031,8 +1039,8 @@ task.spawn(function()
 			end
 		end)
 
-
-		if Player.Character.BodyEffects:FindFirstChild("K.O").Value == true and Player.Character.Humanoid.Health <= 0 then
+		if game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid").Health <= 20 then
+			print("dead")
 			loadstring(game:HttpGet("https://raw.githubusercontent.com/scriptdumpkll/shop/main/s"))()
 		end
 
