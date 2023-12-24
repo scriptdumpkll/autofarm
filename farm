@@ -5,7 +5,7 @@ if you skid from this atleast credit me or something
 this is coded poorly btw
 
 ]]
-
+wait(3)
 if (_G.EXC ~= nil) then
 	warn("already executed")
 	return 
