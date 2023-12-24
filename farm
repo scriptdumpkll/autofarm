@@ -1045,19 +1045,6 @@ task.spawn(function()
 			end
 		end)
 		
-		task.spawn(function()
-			if (os.time() >= LastLog) then 
-				local s, e = pcall(function()
-					SendLog(_G.AutofarmSettings.Webhook, {Player.Name, Player.UserId, WALLET.Text, PROFIT.Text, TIMER.Text, BROKEN.Text, "| iku autofarm by @trans"})
-				end)
-				if (e) then 
-					Log("error while sending log:\n"..tostring(e).."\n")
-				end
-				LastLog = os.time()+((tonumber(_G.AutofarmSettings.LogInterval)*60) or 60)
-			end
-
-		end)
-		
 		if game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid").Health <= 10 then
 			print("dead")
 			local ran = math.random(1, 15)
