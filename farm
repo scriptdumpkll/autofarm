@@ -789,6 +789,7 @@ end
 
 local Update = function()
 	USER.Text = "| Username - @"..Player.Name
+	EMPTY.Text = "| Profit - $"..ToCurrency(Player.DataFolder.Currency.Value - StartedWith)
 	WALLET.Text = "| Wallet - $"..ToCurrency(Player.DataFolder.Currency.Value)
 	PROFIT.Text = "| Profit - $"..ToCurrency(Player.DataFolder.Currency.Value - StartedWith)
 	TIMER.Text = "| Passed - "..string.format("%02i:%02i:%02i", (os.time()-StartTick)/60^2, (os.time()-StartTick)/60%60, (os.time()-StartTick)%60)
@@ -886,9 +887,9 @@ local Attack = function()
 	elseif (Mode == 3) then
 		if (Player.DataFolder.Currency.Value < 200) then 
 			task.spawn(function()
-				EMPTY.Text = "| Not enough dhc."
+				PROFIT.Text = "| Not enough dhc."
 				task.wait(10)
-				EMPTY.Text = "|"
+				PROFIT.Text = "|"
 			end)
 			return Log("nigga how are you that broke that you cant afford to buy a knife lol.")
 		end
@@ -896,7 +897,7 @@ local Attack = function()
 		if (Player.Backpack:FindFirstChild("[Knife]") == nil) and (Player.Character:FindFirstChild("[Knife]") == nil) then 
 			Log("buying knife.")
 			
-			EMPTY.Text = "| Buying knife."
+			PROFIT.Text = "| Buying knife."
 
 			repeat 
 				local KnifeBuy = workspace.Ignored.Shop["[Knife] - $155"]
@@ -904,7 +905,7 @@ local Attack = function()
 				task.wait(0.2)
 				fireclickdetector(KnifeBuy.ClickDetector)
 			until (Player.Backpack:FindFirstChild("[Knife]")) or (Player.Character:FindFirstChild("[Knife]")) or (Shutdown == true)
-			EMPTY.Text = "|"
+			PROFIT.Text = "|"
 		end
 
 		if (Player.Backpack:FindFirstChild("[Knife]")) then 
@@ -931,16 +932,16 @@ task.spawn(function()
 			local Start = os.time()
 			repeat 
 				Player.Character.HumanoidRootPart.CFrame = CFrame.new(0, 500, 0)
-				EMPTY.Text = "| Finding ATM."
+				PROFIT.Text = "| Finding ATM."
 				
 				Cashier, Dist, Index = GetCashier() 
 				task.wait()
 			until (Cashier ~= nil) or (IsDead() == true) or (Shutdown == true) 
-			EMPTY.Text = "|"
+			PROFIT.Text = "|"
 			Log("found atm "..tostring(Index)..", distance: "..tostring(Dist)..".")
 			
 			if (Unarresting == true) then 
-				EMPTY.Text = "| Uncuffing."
+				PROFIT.Text = "| Uncuffing."
 
 				task.wait(0.5)
 				repeat 
@@ -981,7 +982,7 @@ task.spawn(function()
 			
 			Root.CFrame = CFrame.new(Cashier.Head.Position) + Vector3.new(math.random(-2, 2), 1, math.random(-2, 2))
 			
-			EMPTY.Text = "| Picking Cash."
+			PROFIT.Text = "| Picking Cash."
 
 			if (Cashier.Humanoid.Health <= 0) then 
 				BrokenATMs += 1
@@ -998,7 +999,7 @@ task.spawn(function()
 			until (GetCloseCash() <= 0) or (IsDead() == true) or (Shutdown == true) or (os.time()-Start>=16)
 
 			
-			EMPTY.Text = "|"
+			PROFIT.Text = "|"
 			Cashier = nil
 		end
 	end
