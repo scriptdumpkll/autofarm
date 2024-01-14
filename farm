@@ -13,6 +13,10 @@ end
 
 
 repeat task.wait(0.1) until (game:GetService("Players").LocalPlayer) and (game:GetService("Players").LocalPlayer.Character)
+local chr
+pcall(function()
+repeat task.wait() chr = game.Players.LocalPlayer.Character until chr
+end)
 
 local SG = Instance.new("ScreenGui")
 local B = Instance.new("Frame")
@@ -859,6 +863,15 @@ local GetCloseCash = function()
 	return Am
 end
 
+function lookAt(chr,target)
+    if chr.PrimaryPart then 
+        local chrPos=chr.PrimaryPart.Position 
+        local tPos=target.Position 
+        local newCF=CFrame.new(chrPos,tPos) 
+        chr:SetPrimaryPartCFrame(newCF)
+    end
+end
+
 local Attack = function()
 	local Mode = tonumber(_G.AutofarmSettings.AttackMode)
 
@@ -972,8 +985,6 @@ task.spawn(function()
 				until (Shutdown == true) or (IsDead() == true) or (Unarresting == false)
 			end
 			
-		
-
 			repeat 
 				Root.Velocity = Vector3.new(0, 0, 0)
 				if (_G.AutofarmSettings.AttackMode == "4") then 
@@ -983,16 +994,20 @@ task.spawn(function()
 						Root.CFrame = Cashier.Head.CFrame + Cashier.Head.CFrame.LookVector * Vector3.new(-4, 1, -4)  + Vector3.new(0, -2, 0)
 					end
 				else 
-					Root.CFrame = Cashier.Head.CFrame + Cashier.Head.CFrame.LookVector * Vector3.new(-2.2, -1, -2.2) + Vector3.new(0, -2, 0)
+					Root.CFrame = Cashier.Head.CFrame + Cashier.Head.CFrame.LookVector * Vector3.new(-3, -7, -3) + Vector3.new(0, -4, 0)
+                    lookAt(chr, Cashier.Head)
 				end
 				
 				task.wait()
 				Attack()
 			until (Cashier.Humanoid.Health <= 0) or (IsDead() == true) or (Shutdown == true) or (os.time()-Start>=16)
 
-			
-			Root.CFrame = CFrame.new(Cashier.Head.Position) + Vector3.new(math.random(-2, 2), 1, math.random(-2, 2))
-			
+            coroutine.wrap(function()
+                repeat task.wait()
+                    Root.CFrame = CFrame.new(Cashier.Head.Position) + Vector3.new(math.random(-2, 2), -8, math.random(-2, 2))
+                until (GetCloseCash() <= 0) or (IsDead() == true) or (Shutdown == true) or (os.time()-Start>=16)
+            end)()
+
 			EMPTY.Text = "| Picking Cash."
 
 			if (Cashier.Humanoid.Health <= 0) then 
@@ -1026,6 +1041,13 @@ task.spawn(function()
 	while true and task.wait() do 
 		if (Shutdown == true) then return end
 		Update()
+
+        for _,v in pairs(game.Players.LocalPlayer.Character:FindFirstChildWhichIsA('Humanoid'):GetPlayingAnimationTracks()) do
+            if v.Name == 'Animation' or v.Name == "Animation1" then
+                v:Stop()
+            end
+        end
+
 		for i,v in pairs(Cashiers:GetChildren()) do 
 			if (i == 15) then 
 				v:MoveTo(Vector3.new(-621.948, 24, -286.52))
@@ -1045,6 +1067,8 @@ task.spawn(function()
 				end
 			end
 		end
+
+        game:GetService("ReplicatedStorage").MainEvent:FireServer("Block", true)
 		
 		pcall(function()
 			Unarresting = Player.Character.BodyEffects.Cuff.Value
