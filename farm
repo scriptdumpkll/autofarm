@@ -1004,7 +1004,7 @@ task.spawn(function()
 
             coroutine.wrap(function()
                 repeat task.wait()
-                    Root.CFrame = CFrame.new(Cashier.Head.Position) + Vector3.new(math.random(-2, 2), -8, math.random(-2, 2))
+                    Root.CFrame = CFrame.new(Cashier.Position) + Vector3.new(math.random(-2, 2), -8, math.random(-2, 2))
                 until (GetCloseCash() <= 0) or (IsDead() == true) or (Shutdown == true) or (os.time()-Start>=16)
             end)()
 
