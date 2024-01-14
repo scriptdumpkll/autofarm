@@ -1004,7 +1004,7 @@ task.spawn(function()
 
             coroutine.wrap(function()
                 repeat task.wait()
-                    Root.CFrame = Cashier.Head.CFrame + Cashier.Head.CFrame.LookVector + Vector3.new(math.random(-2, 2), -8, math.random(-2, 2))
+                    Root.CFrame = CFrame.new(Cashier.Open.Position) + Vector3.new(math.random(-2, 2), -8, math.random(-2, 2))
                 until (GetCloseCash() <= 0) or (IsDead() == true) or (Shutdown == true) or (os.time()-Start>=16)
             end)()
 
@@ -1043,7 +1043,7 @@ task.spawn(function()
 		Update()
 
         for _,v in pairs(game.Players.LocalPlayer.Character:FindFirstChildWhichIsA('Humanoid'):GetPlayingAnimationTracks()) do
-            if v.Name == 'Animation' or v.Name == "Animation1" then
+            if v.Name == 'Animation' or v.Name == 'Animation1' or v.Name == 'Block' then
                 v:Stop()
             end
         end
