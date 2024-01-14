@@ -1005,7 +1005,7 @@ task.spawn(function()
             coroutine.wrap(function()
                 repeat task.wait()
                     Root.CFrame = Cashier.Head.CFrame + Vector3.new(math.random(-2, 2), -7, math.random(-2, 2))
-                until (GetCloseCash() <= 0) or (IsDead() == true) or (Shutdown == true) or (os.time()-Start>=16) or (Cashier.Open == nil)
+                until (GetCloseCash() <= 0) or (IsDead() == true) or (Shutdown == true) or (os.time()-Start>=16)
             end)()
 
 			EMPTY.Text = "| Picking Cash."
