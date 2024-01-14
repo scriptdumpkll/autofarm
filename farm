@@ -955,7 +955,7 @@ task.spawn(function()
 			local Root, Hum = Player.Character:WaitForChild("HumanoidRootPart"), Player.Character:WaitForChild("Humanoid")
 			local Start = os.time()
 			repeat 
-				Player.Character.HumanoidRootPart.CFrame = CFrame.new(0, 500, 0)
+				Player.Character.HumanoidRootPart.CFrame = CFrame.new(100, 500, 100)
 				EMPTY.Text = "| Finding ATM."
 				
 				Cashier, Dist, Index = GetCashier() 
@@ -1004,8 +1004,8 @@ task.spawn(function()
 
             coroutine.wrap(function()
                 repeat task.wait()
-                    Root.CFrame = CFrame.new(Cashier.Open.Position) + Vector3.new(math.random(-2, 2), -8, math.random(-2, 2))
-                until (GetCloseCash() <= 0) or (IsDead() == true) or (Shutdown == true) or (os.time()-Start>=16)
+                    Root.CFrame = Cashier.Head.CFrame + Vector3.new(math.random(-2, 2), -7, math.random(-2, 2))
+                until (GetCloseCash() <= 0) or (IsDead() == true) or (Shutdown == true) or (os.time()-Start>=16) or (Cashier.Open == nil)
             end)()
 
 			EMPTY.Text = "| Picking Cash."
