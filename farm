@@ -1002,7 +1002,11 @@ task.spawn(function()
 				Attack()
 			until (Cashier.Humanoid.Health <= 0) or (IsDead() == true) or (Shutdown == true) or (os.time()-Start>=16)
 
-            Root.CFrame = Cashier.Wedge.CFrame + Vector3.new(math.random(-2, 2), -7, math.random(-2, 2))
+            coroutine.wrap(function()
+                repeat task.wait()
+                    Root.CFrame = Cashier.Wedge.CFrame + Vector3.new(math.random(-2, 2), -7, math.random(-2, 2))
+                until (GetCloseCash() <= 0) or (IsDead() == true) or (Shutdown == true) or (os.time()-Start>=16) or (Cashier.Open == nil)
+            end)()
 
 			EMPTY.Text = "| Picking Cash."
 
@@ -1035,6 +1039,7 @@ end)
 
 coroutine.wrap(function()
 	while true do task.wait()
+		repeat wait() until game.Players.LocalPlayer.Character:FindFirstChildWhichIsA('Humanoid'):GetPlayingAnimationTracks()
 		if game.Players.LocalPlayer.Character or game:GetService("Players").LocalPlayer or game.Players.LocalPlayer.Character.Animate then
 			for _,v in pairs(game.Players.LocalPlayer.Character:FindFirstChildWhichIsA('Humanoid'):GetPlayingAnimationTracks()) do
 				if v.Name == 'Animation' or v.Name == 'Animation1' or v.Name == 'Block' then
